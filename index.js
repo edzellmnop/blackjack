@@ -1,6 +1,6 @@
 let firstCard = 10, secondCard = 11, sum;
 let hasBlackJack = false, isAlive = true, message ="", messageEl, sumEl, cardsEl;
-
+let cards = [firstCard, secondCard];
 sum = firstCard + secondCard;
 
 messageEl = document.getElementById("message-el");
@@ -32,7 +32,7 @@ function renderGame(){
     }
     messageEl.textContent = message;
     sumEl.textContent = "Sum: " + sum;
-    cardsEl.textContent = "Cards: " + firstCard +" "+ secondCard;
+    cardsEl.textContent = "Cards: " + cards[0] +" "+ cards[1];
 }
 
 function newCard(){
