@@ -1,7 +1,13 @@
-let firstCard = getRandomCard(), secondCard = getRandomCard(), sum;
-let hasBlackJack = false, isAlive = true, message ="", messageEl, sumEl, cardsEl;
-let cards = [firstCard, secondCard];
-sum = firstCard + secondCard;
+let player = {
+    name: "edge",
+    chips: 145
+}
+let hasBlackJack = false, isAlive = false, message ="", messageEl, sumEl, cardsEl;
+let cards = [];
+let sum;
+
+let playerEl = document.getElementById("player-el");
+playerEl.textContent = player.name +": $" + player.chips;
 
 messageEl = document.getElementById("message-el");
 sumEl = document.querySelector("#sum-el");
@@ -11,17 +17,37 @@ document.getElementById("btn-newCard").addEventListener("click", newCard);
 
 
 function getRandomCard(){ 
-    let random = Math.floor(Math.random() * 10);
-    return random;
+    let random = Math.floor(Math.random() * 13) + 1;
+
+    if(random === 1){
+        return 11;
+    }
+    else if(random > 10){
+        return 10;
+    }
+    else{
+        return random;
+    }
+    
 }
 
 function startGame(){
-    cardsEl.textContent = "XXXXXXX"; 
+    isAlive = true;
+    let firstCard = getRandomCard(), secondCard = getRandomCard();
+    cards = [firstCard, secondCard];
+    sum = firstCard + secondCard;
+    
     renderGame();
 }
 
 function renderGame(){
-    cardsEl.textContent = "Cards: "; 
+    cardsEl.textContent = "Cards: ";
+    for (let i = 0; i < cards.length; i++) {
+        cardsEl.textContent += cards[i] + " ";
+        
+    }
+
+    sumEl.textContent = "Sum: " + sum;
 
     if(sum <= 20){
         message = "Do you want to draw a new card?"
@@ -36,24 +62,18 @@ function renderGame(){
     else {
         message = "You're out of the game";
         console.log(message);
-        isAlive = false
-        
+        isAlive = false   
     }
     messageEl.textContent = message;
-    sumEl.textContent = "Sum: " + sum;
-
-    for (let i = 0; i < cards.length; i++) {
-        cardsEl.textContent += cards[i] + " ";
-        
-    }
 }
 
 function newCard(){
-    console.log("Drawing a new card from the deck");
-    let newCard = getRandomCard();
-    sum += newCard;
-    cards.push(newCard)
-    renderGame ();
+    if(isAlive === true && hasBlackJack == false){
+        let newCard = getRandomCard();
+        sum += newCard;
+        cards.push(newCard)
+        renderGame ();
+    }
     
 }
 
